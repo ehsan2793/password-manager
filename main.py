@@ -40,7 +40,6 @@ def save():
     password = password_entry.get()
 
     if len(website) > 0 or len(password) > 0:
-        messagebox.showinfo(title='Missing', message="Enter both website and password")
 
         is_ok = messagebox.askokcancel(title=website,
                                        message=f"These are the details entered: \nEmail: {email}"
