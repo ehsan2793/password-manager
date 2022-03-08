@@ -1,6 +1,8 @@
 from tkinter import *
 from tkinter import messagebox
-import random
+from random import choice, randint, shuffle
+
+import pyperclip
 
 
 # password generator
@@ -15,25 +17,20 @@ def generate_password():
     numbers = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9']
     symbols = ['!', '#', '$', '%', '&', '(', ')', '*', '+']
 
-    nr_letters = random.randint(8, 10)
-    nr_symbols = random.randint(2, 4)
-    nr_numbers = random.randint(2, 4)
+    nr_letters = randint(8, 10)
+    nr_symbols = randint(2, 4)
+    nr_numbers = randint(2, 4)
 
-    password_list = []
+    password_letters = [choice(letters) for _ in range(nr_letters)]
+    password_symbols = [choice(symbols) for _ in range(nr_symbols)]
+    password_numbers = [choice(numbers) for _ in range(nr_numbers)]
+    password_list = password_letters + password_symbols + password_numbers
 
-    for char in range(nr_letters):
-        password_list.append(random.choice(letters))
-
-    for char in range(nr_symbols):
-        password_list += random.choice(symbols)
-
-    for char in range(nr_numbers):
-        password_list += random.choice(numbers)
-
-    random.shuffle(password_list)
+    shuffle(password_list)
 
     password = ''.join(password_list)
-    password_entry.insert(0,password)
+    password_entry.insert(0, password)
+    pyperclip.copy(password)
 
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
@@ -55,7 +52,6 @@ def save():
                 password_entry.delete(0, END)
     else:
         messagebox.showerror(title='Missing', message="Enter both email and password")
-
 
 
 # -------------------------------------
@@ -81,6 +77,7 @@ password_label.grid(row=3, column=0)
 website_entry = Entry(width=35)
 website_entry.grid(row=1, column=1, columnspan=2)
 website_entry.focus()
+
 email_entry = Entry(width=35)
 email_entry.grid(row=2, column=1, columnspan=2)
 email_entry.insert(0, 'rahimiehsan1997@gmail.com')
